@@ -67,4 +67,4 @@ typings/
 *.zip
 package-lock.json
 .serverless
-.dist
+/dist
