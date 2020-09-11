@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "start": "ts-node ./src/stat.ts --exec",
-    "deploy": "sls deploy",
+    "deploy": "npm run build && sls deploy",
     "remove": "sls remove"
   },
   "dependencies": {
