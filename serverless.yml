@@ -12,6 +12,7 @@ provider:
   environment:
     # required
     SLACK_INCOMMING_WEBHOOK_URL: ${env:SLACK_INCOMMING_WEBHOOK_URL}
+    GITHUB_ORGNAME: ${env:GITHUB_ORGNAME}
     GITHUB_TOKEN: ${env:GITHUB_TOKEN}
     # options
     SLACK_CHANNEL: ${env:SLACK_CHANNEL, self:custom.defaultSlackChannel}

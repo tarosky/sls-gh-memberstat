@@ -4,8 +4,10 @@ export AWS_SECRET_ACCESS_KEY=xxxx
 
 # [required] Your Slack incomming message
 export SLACK_INCOMMING_WEBHOOK_URL=xxxx
+export GITHUB_ORGNAME=xxxx
+export GITHUB_TOKEN=xxxx
 
 # optional
 export SLACK_CHANNEL="#general"
 export SLACK_EMOJI=":ghost:"
-export SLACK_USERNAME="AWS Billing Alert Bot"
+export SLACK_USERNAME="[bot] AWS GitHub Member Manager"
