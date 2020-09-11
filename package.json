@@ -1,0 +1,24 @@
+{
+  "name": "sls-gh-memberstat",
+  "version": "1.0.0",
+  "main": "serverless.yml",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.62",
+    "@types/node-fetch": "^2.5.7",
+    "serverless": "^2.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "peerDependencies": {},
+  "scripts": {
+    "build": "tsc",
+    "deploy": "sls deploy",
+    "remove": "sls remove"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "author": "kamataryo <kamataryo@users.noreply.github.com>"
+}

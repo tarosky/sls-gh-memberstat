@@ -1,0 +1,11 @@
+# profile
+export AWS_ACCESS_KEY_ID=xxxx
+export AWS_SECRET_ACCESS_KEY=xxxx
+
+# [required] Your Slack incomming message
+export SLACK_INCOMMING_WEBHOOK_URL=xxxx
+
+# optional
+export SLACK_CHANNEL="#general"
+export SLACK_EMOJI=":ghost:"
+export SLACK_USERNAME="AWS Billing Alert Bot"
