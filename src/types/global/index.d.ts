@@ -28,6 +28,36 @@ declare namespace Tarosky {
       // custom props
       type: "member" | "outside_collaborator";
     };
+
+    export namespace GraphqlQueryResult {
+      export type ListRepositoryCollaborators = {
+        data: {
+          rateLimit: {
+            cost: number;
+            remaining: number;
+            resetAt: string;
+          };
+          organization: {
+            name: string;
+            url: string;
+            repositories: {
+              totalCount: number;
+              nodes: {
+                name: string;
+                collaborators: {
+                  totalCount: number;
+                  edges: {
+                    node: {
+                      login: string;
+                    };
+                  }[];
+                };
+              }[];
+            };
+          };
+        };
+      };
+    }
   }
 }
 

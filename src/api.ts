@@ -1,15 +1,21 @@
 import parseLinkHeader from "parse-link-header";
 import fetch from "node-fetch";
 
-const createHeader = (accessToken: string) =>
-  accessToken
-    ? {
-        Accept: "application/vnd.github.v3+json",
-        Authorization: `token ${accessToken}`,
-      }
-    : {
-        Accept: "application/vnd.github.v3+json",
-      };
+const createHeader = {
+  v3: (accessToken: string) =>
+    accessToken
+      ? {
+          Accept: "application/vnd.github.v3+json",
+          Authorization: `token ${accessToken}`,
+        }
+      : {
+          Accept: "application/vnd.github.v3+json",
+        },
+  v4: (accessToken: string) => ({
+    Accept: "application/json",
+    Authorization: `bearer ${accessToken}`,
+  }),
+};
 
 const githubPagenation = async function (
   initialUrl: string,
@@ -47,13 +53,52 @@ const githubPagenation = async function (
 export const listGitHubMembers = (org: string) => {
   const url = `https://api.github.com/orgs/${org}/members`;
   const token = process.env.GITHUB_TOKEN;
-  return githubPagenation(url, createHeader(token), "member");
+  return githubPagenation(url, createHeader.v3(token), "member");
 };
 
-export const listGitHubOutsideCollaborators = async (org: string) => {
+export const listGitHubOutsideCollaborators = (org: string) => {
   const url = `https://api.github.com/orgs/${org}/outside_collaborators`;
   const token = process.env.GITHUB_TOKEN;
-  return githubPagenation(url, createHeader(token), "outside_collaborator");
+  return githubPagenation(url, createHeader.v3(token), "outside_collaborator");
+};
+
+export const listRepositoryCollanorators = (org: string) => {
+  const url = "https://api.github.com/graphql";
+  const token = process.env.GITHUB_TOKEN;
+  const query = `
+    query listRepositoryCollaborators {
+      rateLimit {
+        cost
+        remaining
+        resetAt
+      }
+      organization(login: "${org}") {
+        id
+        name
+        url
+        repositories(first: 100) {
+          totalCount
+          nodes {
+            id
+            name
+            collaborators(first: 100) {
+              totalCount
+              edges {
+                node {
+                  login
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  return fetch(url, {
+    method: "POST",
+    headers: createHeader.v4(token),
+    body: JSON.stringify({ query }),
+  }).then((res) => res.json());
 };
 
 export const postSlack = async (text: string) => {
@@ -69,7 +114,7 @@ export const postSlack = async (text: string) => {
     text,
     icon_emoji: SLACK_EMOJI,
   };
-  console.log(data);
+
   try {
     const result = await fetch(SLACK_INCOMMING_WEBHOOK_URL, {
       method: "POST",

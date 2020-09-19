@@ -1,3 +1,5 @@
-export const formatMessages = (members: Tarosky.GitHub.User[]) => {
-  return "メッセージをフォーマットします";
+export const formatMessages = (data: any) => {
+  return `\`\`\`
+${data}
+\`\`\``;
 };
